@@ -7,10 +7,6 @@ const app = express();
 const HTTP_PORT = 8080;
 const HTTPS_PORT = 8443;
 
-const options = {
-    key: fs.readFileSync('./rootca.key'),
-    cert: fs.readFileSync('./rootca.crt')
-};
 
 app.use(express.static('public'));
 
@@ -21,5 +17,11 @@ app.get('/', (req, res) => {
 // Create an HTTP server.
 http.createServer(app).listen(HTTP_PORT);
 
-// Create an HTTPS server.
-https.createServer(options, app).listen(HTTPS_PORT);
+if (fs.existsSync('./rootca.key') && fs.existsSync('./rootca.crt')) {
+    const options = {
+        key: fs.readFileSync('./rootca.key'),
+        cert: fs.readFileSync('./rootca.crt')
+    };
+    // Create an HTTPS server.
+    https.createServer(options, app).listen(HTTPS_PORT);
+}
