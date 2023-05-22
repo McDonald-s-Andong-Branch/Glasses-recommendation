@@ -43,38 +43,45 @@
     </nav>
     <!-- Masthead-->
     <header class="masthead">
-        <div style="display: flex;">
-            <video id="video" style="width: 45%;position: absolute;left: 3%;border-radius: 10px;box-shadow: 0 0 10px black;" autoplay></video>
-            <canvas id="canvas" style="width: 45%;position: absolute;right: 3%;border-radius: 10px;box-shadow: 0 0 10px black;"></canvas>
-        </div>
-        <div style="width: 45%;position: absolute;left: 3%;top: 500px">
-            <button type="button" id="webcamBtn"
-                style="margin-left: auto; margin-right: auto;display: flex;">캡쳐하기</button>
-        </div>
-        <script>
-            const constraints = {
-                video: {
-                    width: { ideal: 1280 },
-                    height: { ideal: 720 }
-                }
-            };
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
-                    var video = document.getElementById('video');
-                    video.srcObject = stream;
-                    video.play();
-                });
-            }
+        <div style="position: absolute;top: 0px;width: 100%;height: 100%;backdrop-filter: blur(20px);">
+            <div style="display: flex;margin-top: 10%;">
+                <video id="video"
+                    style="width: 45%;position: absolute;left: 3%;border-radius: 10px;box-shadow: 0 0 10px black;"
+                    autoplay></video>
+                <canvas id="canvas"
+                    style="width: 45%;position: absolute;right: 3%;border-radius: 10px;box-shadow: 0 0 10px black;"></canvas>
+            </div>
+            <div style="width: 45%;position: absolute;left: 3%;top: 70%;">
+                <button type="button" id="webcamBtn"
+                    style="margin-left: auto; margin-right: auto;display: flex;">캡쳐하기</button>
+            </div>
+            <script>
+                const constraints = {
+                    video: {
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    }
+                };
 
-            var canvas = document.getElementById('canvas');
-            var context = canvas.getContext('2d');
-            var video = document.getElementById('video');
-            document.getElementById("webcamBtn").addEventListener("click", function () {
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                context.drawImage(video, 0, 0, canvas.width, canvas.height); // 캡처한 이미지 그리기
-            });
-        </script>
+                var canvas = document.getElementById('canvas');
+                var context = canvas.getContext('2d');
+                var video = document.getElementById('video');
+                const captureButton = document.getElementById("webcamBtn");
+                captureButton.addEventListener("click", function () {
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    context.drawImage(video, 0, 0, canvas.width, canvas.height); // 캡처한 이미지 그리기
+                });
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+                        var video = document.getElementById('video');
+                        video.srcObject = stream;
+                        video.play();
+                        captureButton.click();
+                    });
+                }
+            </script>
+        </div>
     </header>
     <!-- About-->
     <section class="page-section bg-primary" id="about">
