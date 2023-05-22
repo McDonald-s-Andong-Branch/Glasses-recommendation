@@ -1,236 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title> 안경 추천 시스템 👍</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap Icons-->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
-        <!-- SimpleLightbox plugin CSS-->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
-    <body id="page-top">
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="#page-top">
-                    <span class="brand-text">안경 추천 시스템</span>
-                </a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#portfolio">🍟</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">🍔</a></li>
-                    </ul>
-                </div>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title> 안경 추천 시스템 👍</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap Icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic"
+        rel="stylesheet" type="text/css" />
+    <!-- SimpleLightbox plugin CSS-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="#page-top">
+                <span class="brand-text">안경 추천 시스템</span>
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portfolio">🍟</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">🍔</a></li>
+                </ul>
             </div>
-        </nav>
-<!-- Masthead-->
-<header class="masthead">
-    <div style="display: flex;">
-        <video id="video" style="width: 45%; margin-right: 65px;" autoplay></video>
-        <canvas id="canvas" style="width: 45%; margin-right: 65px;"></canvas>
-    </div>
-    <div style="display: flex; justify-content: center;">
-        <button type="button" id="webcamBtn">캡쳐하기</button>
-    </div>
-    <script>
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true }).then(function (stream) {
-                var video = document.getElementById('video');
-                video.srcObject = stream;
-                video.play();
+        </div>
+    </nav>
+    <!-- Masthead-->
+    <header class="masthead">
+        <div style="display: flex;">
+            <video id="video" style="width: 45%;position: absolute;left: 3%;border-radius: 10px;box-shadow: 0 0 10px black;" autoplay></video>
+            <canvas id="canvas" style="width: 45%;position: absolute;right: 3%;border-radius: 10px;box-shadow: 0 0 10px black;"></canvas>
+        </div>
+        <div style="width: 45%;position: absolute;left: 3%;top: 500px">
+            <button type="button" id="webcamBtn"
+                style="margin-left: auto; margin-right: auto;display: flex;">캡쳐하기</button>
+        </div>
+        <script>
+            const constraints = {
+                video: {
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                }
+            };
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+                    var video = document.getElementById('video');
+                    video.srcObject = stream;
+                    video.play();
+                });
+            }
+
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            var video = document.getElementById('video');
+            document.getElementById("webcamBtn").addEventListener("click", function () {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height); // 캡처한 이미지 그리기
             });
-        }
+        </script>
+    </header>
+    <!-- About-->
+    <section class="page-section bg-primary" id="about">
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <h2 class="text-white mt-0">안경을 추천해드릴게요 !</h2>
+                    <hr class="divider divider-light" />
+                    <p class="text-white-75 mb-4">Start Bootstrap has everything you need to get your new website up and
+                        running in no time! Choose one of our open source, free to download, and easy to use themes! No
+                        strings attached!</p>
+                    <a class="btn btn-light btn-xl" href="#services">Get Started!</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Services-->
+    <section class="page-section" id="services">
+        <div class="container px-4 px-lg-5">
+            <h2 class="text-center mt-0">At Your Service</h2>
+            <hr class="divider" />
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="mt-5">
+                        <div class="mb-2"><i class="bi-gem fs-1 text-primary"></i></div>
+                        <h3 class="h4 mb-2">Sturdy Themes</h3>
+                        <p class="text-muted mb-0">Our themes are updated regularly to keep them bug free!</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="mt-5">
+                        <div class="mb-2"><i class="bi-laptop fs-1 text-primary"></i></div>
+                        <h3 class="h4 mb-2">Up to Date</h3>
+                        <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="mt-5">
+                        <div class="mb-2"><i class="bi-globe fs-1 text-primary"></i></div>
+                        <h3 class="h4 mb-2">Ready to Publish</h3>
+                        <p class="text-muted mb-0">You can use this design as is, or you can make changes!</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="mt-5">
+                        <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
+                        <h3 class="h4 mb-2">Made with Love</h3>
+                        <p class="text-muted mb-0">Is it really open source if it's not made with love?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Call to action-->
+    <section class="page-section bg-dark text-white">
+        <div class="container px-4 px-lg-5 text-center">
+            <h2 class="mb-4">추천 받은 안경을 구매하러 가보세요 ! 👓️ </h2>
+            <a class="btn btn-light btn-xl" href="안경정보사이트 링크 첨부"> 👓️ 구경하기 ! </a>
+        </div>
+    </section>
+    <!-- Contact-->
+    <section class="page-section" id="contact">
+        <style>
+            table {
+                border-collapse: collapse;
+                margin-top: 10px;
+                border-top: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;
+            }
 
-        var canvas = document.getElementById('canvas');
-        var context = canvas.getContext('2d');
-        var video = document.getElementById('video');
-        document.getElementById("webcamBtn").addEventListener("click", function () {
-            context.drawImage(video, 0, 0, canvas.width, canvas.height); // 캡처한 이미지 그리기
-        });
-    </script>
-</header>
-        <!-- About-->
-        <section class="page-section bg-primary" id="about">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-lg-8 text-center">
-                        <h2 class="text-white mt-0">안경을 추천해드릴게요 !</h2>
-                        <hr class="divider divider-light" />
-                        <p class="text-white-75 mb-4">Start Bootstrap has everything you need to get your new website up and running in no time! Choose one of our open source, free to download, and easy to use themes! No strings attached!</p>
-                        <a class="btn btn-light btn-xl" href="#services">Get Started!</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Services-->
-        <section class="page-section" id="services">
-            <div class="container px-4 px-lg-5">
-                <h2 class="text-center mt-0">At Your Service</h2>
-                <hr class="divider" />
-                <div class="row gx-4 gx-lg-5">
-                    <div class="col-lg-3 col-md-6 text-center">
-                        <div class="mt-5">
-                            <div class="mb-2"><i class="bi-gem fs-1 text-primary"></i></div>
-                            <h3 class="h4 mb-2">Sturdy Themes</h3>
-                            <p class="text-muted mb-0">Our themes are updated regularly to keep them bug free!</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 text-center">
-                        <div class="mt-5">
-                            <div class="mb-2"><i class="bi-laptop fs-1 text-primary"></i></div>
-                            <h3 class="h4 mb-2">Up to Date</h3>
-                            <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 text-center">
-                        <div class="mt-5">
-                            <div class="mb-2"><i class="bi-globe fs-1 text-primary"></i></div>
-                            <h3 class="h4 mb-2">Ready to Publish</h3>
-                            <p class="text-muted mb-0">You can use this design as is, or you can make changes!</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 text-center">
-                        <div class="mt-5">
-                            <div class="mb-2"><i class="bi-heart fs-1 text-primary"></i></div>
-                            <h3 class="h4 mb-2">Made with Love</h3>
-                            <p class="text-muted mb-0">Is it really open source if it's not made with love?</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Call to action-->
-        <section class="page-section bg-dark text-white">
+            td {
+                padding: 10px;
+                font-weight: bold;
+                text-align: center;
+                border-left: 1px solid #ccc;
+                border-right: 1px solid #ccc;
+            }
+
+            button {
+                font-size: 18px;
+                padding: 10px 20px;
+                background-color: #f48181;
+                margin-left: 20px;
+                margin-right: 20px;
+                margin-bottom: 20px;
+                color: white;
+                border: 3px solid #f48181;
+                border-radius: 15px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                margin-top: 20px;
+            }
+
+            button:hover {
+                background-color: #f48181;
+                color: #ffeee4;
+                cursor: pointer;
+            }
+        </style>
+        <script>
+            // Register a new person
+            function registerNewPerson() {
+                const imageUrl = prompt("Enter the image URL for the new person:");
+                const name = prompt("Enter the name for the new person:");
+
+                // Create a new table row
+                const newRow = document.createElement("tr");
+
+                // Create the image cell
+                const imageCell = document.createElement("td");
+                const imageElement = document.createElement("img");
+                imageElement.src = imageUrl;
+                imageElement.style.width = "100px";
+                imageElement.style.height = "100px";
+                imageCell.appendChild(imageElement);
+                newRow.appendChild(imageCell);
+
+                // Create the name cell
+                const nameCell = document.createElement("td");
+                nameCell.style.width = "80px";
+                nameCell.textContent = name;
+                newRow.appendChild(nameCell);
+
+                // Create the attendance button cell
+                const buttonCell = document.createElement("td");
+                const attendanceButton = document.createElement("button");
+                attendanceButton.textContent = "😊";
+                buttonCell.appendChild(attendanceButton);
+                newRow.appendChild(buttonCell);
+
+                // Get the reference to the table
+                const table = document.querySelector("table");
+
+                // Insert the new row at the beginning of the table
+                table.insertBefore(newRow, table.firstChild);
+
+                // Clear the input fields
+                document.getElementById("new-person-image").src = "";
+                document.getElementById("new-person-name").textContent = "";
+
+                // Scroll to the newly registered person
+                newRow.scrollIntoView({ behavior: "smooth" });
+            }
+        </script>
+        </head>
+
+        <body>
             <div class="container px-4 px-lg-5 text-center">
-                <h2 class="mb-4">추천 받은 안경을 구매하러 가보세요 ! 👓️ </h2>
-                <a class="btn btn-light btn-xl" href="안경정보사이트 링크 첨부"> 👓️ 구경하기 ! </a>
+                <h2 class="mb-4">방문 기록을 남겨보세요 ! 👓️ </h2>
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <table style="background: white;">
+                        <tr style="background-color: #ffecd8; border-top: 1px solid #ccc">
+                            <td><img src="https://img.freepik.com/premium-vector/cute-happy-smiling-burger-character-modern-trendy-flat-style-cartoon-illustration-icon-isolated-on-white-burger-fast-food-character_92289-599.jpg"
+                                    style="width:100px; height:100px;"></td>
+                            <td style="width: 100px;">사람이름</td>
+                            <td><button onclick="sendData1()">😊</button></td>
+                        </tr>
+                    </table>
+                    <button onclick="registerNewPerson()">방문 기록 남기기</button>
+                </div>
             </div>
-        </section>
-        <!-- Contact-->
-        <section class="page-section" id="contact">
-            <style>
-                table {
-                    border-collapse: collapse;
-                    margin-top: 10px;
-                    border-top: 1px solid #ccc;
-                    border-bottom: 1px solid #ccc;
-                }
-                td {
-                    padding: 10px;
-                    font-weight: bold;
-                    text-align: center;
-                    border-left: 1px solid #ccc;
-                    border-right: 1px solid #ccc;
-                }
-                button {
-                    font-size: 18px;
-                    padding: 10px 20px;
-                    background-color: #f48181;
-                    margin-left: 20px;
-                    margin-right: 20px;
-                    margin-bottom: 20px;
-                    color: white;
-                    border: 3px solid #f48181;
-                    border-radius: 15px;
-                    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-                    margin-top: 20px;
-                }
-                button:hover {
-                    background-color: #f48181;
-                    color: #ffeee4;
-                    cursor: pointer;
-                }
-            </style>
-                <script>
-                    // Register a new person
-                    function registerNewPerson() {
-                        const imageUrl = prompt("Enter the image URL for the new person:");
-                        const name = prompt("Enter the name for the new person:");
-            
-                        // Create a new table row
-                        const newRow = document.createElement("tr");
-            
-                        // Create the image cell
-                        const imageCell = document.createElement("td");
-                        const imageElement = document.createElement("img");
-                        imageElement.src = imageUrl;
-                        imageElement.style.width = "100px";
-                        imageElement.style.height = "100px";
-                        imageCell.appendChild(imageElement);
-                        newRow.appendChild(imageCell);
-            
-                        // Create the name cell
-                        const nameCell = document.createElement("td");
-                        nameCell.style.width = "80px";
-                        nameCell.textContent = name;
-                        newRow.appendChild(nameCell);
-            
-                        // Create the attendance button cell
-                        const buttonCell = document.createElement("td");
-                        const attendanceButton = document.createElement("button");
-                        attendanceButton.textContent = "😊";
-                        buttonCell.appendChild(attendanceButton);
-                        newRow.appendChild(buttonCell);
-            
-                        // Get the reference to the table
-                        const table = document.querySelector("table");
-            
-                        // Insert the new row at the beginning of the table
-                        table.insertBefore(newRow, table.firstChild);
-            
-                        // Clear the input fields
-                        document.getElementById("new-person-image").src = "";
-                        document.getElementById("new-person-name").textContent = "";
-            
-                        // Scroll to the newly registered person
-                        newRow.scrollIntoView({ behavior: "smooth" });
-                    }
-                </script>
-            </head>
-            <body>
-                <div class="container px-4 px-lg-5 text-center">
-                    <h2 class="mb-4">방문 기록을 남겨보세요 ! 👓️ </h2>
-                    <div style="display: flex; flex-direction: column; align-items: center;">
-                        <table style="background: white;">
-                            <tr style="background-color: #ffecd8; border-top: 1px solid #ccc">
-                                <td><img src="https://img.freepik.com/premium-vector/cute-happy-smiling-burger-character-modern-trendy-flat-style-cartoon-illustration-icon-isolated-on-white-burger-fast-food-character_92289-599.jpg" style="width:100px; height:100px;"></td>
-                                <td style="width: 100px;">사람이름</td>
-                                <td><button onclick="sendData1()">😊</button></td>
-                            </tr>
-                        </table>
-                        <button onclick="registerNewPerson()">방문 기록 남기기</button>
-                    </div>
-                </div>                                               
-            </body>           
-        </section>
+        </body>
+    </section>
 
-        <!-- Footer-->
-        <footer class="bg-light py-5">
-            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2023 - 맥도날드 안동점</div></div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- SimpleLightbox plugin JS-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-    </body>
+    <!-- Footer-->
+    <footer class="bg-light py-5">
+        <div class="container px-4 px-lg-5">
+            <div class="small text-center text-muted">Copyright &copy; 2023 - 맥도날드 안동점</div>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SimpleLightbox plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <!-- * *                               SB Forms JS                               * *-->
+    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+</body>
+
 </html>
