@@ -1,0 +1,36 @@
+<style>
+            table {
+                border-collapse: collapse;
+                margin-top: 10px;
+                border-top: 1px solid #ccc;
+                border-bottom: 1px solid #ccc;
+            }
+
+            td {
+                padding: 10px;
+                font-weight: bold;
+                text-align: center;
+                border-left: 1px solid #ccc;
+                border-right: 1px solid #ccc;
+            }
+
+            button {
+                font-size: 18px;
+                padding: 10px 20px;
+                background-color: #f48181;
+                margin-left: 20px;
+                margin-right: 20px;
+                margin-bottom: 20px;
+                color: white;
+                border: 3px solid #f48181;
+                border-radius: 15px;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+                margin-top: 20px;
+            }
+
+            button:hover {
+                background-color: #f48181;
+                color: #ffeee4;
+                cursor: pointer;
+            }
+        </style>

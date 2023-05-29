@@ -4,8 +4,8 @@ const http = require('http');
 const https = require('https');
 const app = express();
 
-const HTTP_PORT = 8080;
-const HTTPS_PORT = 8443;
+const HTTP_PORT = 80;
+const HTTPS_PORT = 443;
 
 
 app.use(express.static('public'));

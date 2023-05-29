@@ -19,6 +19,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+
+    <script src="js/face_recog.js"></script>
 </head>
 
 <body id="page-top">
@@ -56,10 +58,7 @@
             </div>
             <script>
                 const constraints = {
-                    video: {
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
-                    }
+                    video: true
                 };
 
                 var canvas = document.getElementById('canvas');
@@ -77,6 +76,8 @@
                     capturedImage.style.width = "100%";
                     capturedImage.style.height = "100%";
 
+                    uploadImageToAPI(canvas.toDataURL())
+
                     var imageContainer = document.getElementById("capturedImageContainer");
                     imageContainer.innerHTML = ""; // 이미지를 표시하기 전에 기존 내용을 지움
                     imageContainer.appendChild(capturedImage);
@@ -86,7 +87,6 @@
                         var video = document.getElementById('video');
                         video.srcObject = stream;
                         video.play();
-                        captureButton.click();
                     });
                 }
             </script>
