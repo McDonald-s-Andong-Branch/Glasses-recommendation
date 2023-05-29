@@ -19,7 +19,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    
+    <script src="js/face-api.js"></script>
+    <script src="js/face-api.min.js"></script>
+    <script src="js/faceDetectionControls.js"></script>
 
+    <script src="js/canvas-drawer.js"></script>
     <script src="js/face_recog.js"></script>
 </head>
 
@@ -56,40 +61,6 @@
                 <button type="button" id="webcamBtn"
                     style="margin-left: auto; margin-right: auto; display: flex;">캡쳐하기</button>
             </div>
-            <script>
-                const constraints = {
-                    video: true
-                };
-
-                var canvas = document.getElementById('canvas');
-                var context = canvas.getContext('2d');
-                var video = document.getElementById('video');
-                const captureButton = document.getElementById("webcamBtn");
-                captureButton.addEventListener("click", function () {
-                    canvas.width = video.videoWidth;
-                    canvas.height = video.videoHeight;
-                    context.drawImage(video, 0, 0, canvas.width, canvas.height); // 캡처한 이미지 그리기
-
-                    // 이미지를 네모 박스에 표시하기
-                    var capturedImage = new Image();
-                    capturedImage.src = canvas.toDataURL(); // 캔버스의 이미지를 데이터 URL로 가져옴
-                    capturedImage.style.width = "100%";
-                    capturedImage.style.height = "100%";
-
-                    uploadImageToAPI(canvas.toDataURL())
-
-                    var imageContainer = document.getElementById("capturedImageContainer");
-                    imageContainer.innerHTML = ""; // 이미지를 표시하기 전에 기존 내용을 지움
-                    imageContainer.appendChild(capturedImage);
-                });
-                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                    navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
-                        var video = document.getElementById('video');
-                        video.srcObject = stream;
-                        video.play();
-                    });
-                }
-            </script>
         </div>
     </header>
     <!-- 추천 안경, 안경을 쓴 모습 보여주는 파트 -->
@@ -127,30 +98,7 @@
                     </div>
                 </div>
             </div>
-        </div>        
-        <script>
-            // 이미지 가져오기 함수
-            function getRandomGlassesImage() {
-                // 구글 Cloud 제품 검색 API 요청 URL
-                var apiUrl = 'https://www.googleapis.com/customsearch/v1?key=AIzaSyBAXRT5gcb4OUUBOHgxukSXRTP4mOFNhOE&cx=5315fec7cab154840&q=glasses&searchType=image';
-
-                // API를 통해 랜덤 이미지 가져오기
-                fetch(apiUrl)
-                    .then(function (response) {
-                        return response.json();
-                    })
-                    .then(function (data) {
-                        var glassesImageElement = document.getElementById('glassesImage');
-                        var randomImage = data.items[Math.floor(Math.random() * data.items.length)];
-                        glassesImageElement.src = randomImage.link; // 이미지 표시
-                    })
-                    .catch(function (error) {
-                        console.log('Error fetching random image:', error);
-                    });
-            }
-            // 페이지 로드 시 랜덤 이미지 가져오기
-            getRandomGlassesImage();
-        </script>
+        </div>
     </section>
     <!-- Services-->
     <section class="page-section" id="services">
@@ -305,17 +253,6 @@
             <div class="small text-center text-muted">Copyright &copy; 2023 - 맥도날드 안동점</div>
         </div>
     </footer>
-    <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- SimpleLightbox plugin JS-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
-    <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <!-- * *                               SB Forms JS                               * *-->
-    <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-    <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 
 </html>
