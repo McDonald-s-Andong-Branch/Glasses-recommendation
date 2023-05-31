@@ -16,11 +16,12 @@ function drawBox(ctx, rect) {
     ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
 }
 
-function drawImage(canvas, image, centerX, centerY, angle) {
+function drawImage(canvas, image, centerX, centerY, angle, dist) {
     var ctx = canvas.getContext('2d');
 
-    var imageWidth = image.width;
-    var imageHeight = image.height;
+    console.log(dist)
+    var imageWidth = dist * 2.5;
+    var imageHeight = image.height * imageWidth / image.width * 2;
 
     ctx.save();
     ctx.translate(centerX, centerY);

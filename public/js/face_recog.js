@@ -85,7 +85,7 @@ function AnalyzeFace(context, canvas, video, ouputCanvas, ouputContext) {
 
             const ouput = calculateEyePositionAndFaceAngle(landmarks.positions);
 
-            drawImage(ouputCanvas, glassesImage, ouput.x, ouput.y, ouput.d);
+            drawImage(ouputCanvas, glassesImage, ouput.x, ouput.y, ouput.d, ouput.dist);
         });
     }, 300);
 }
@@ -97,6 +97,8 @@ function calculateEyePositionAndFaceAngle(landmarksData) {
     const leftEye = landmarksData[leftEyeIndex];
     const rightEye = landmarksData[rightEyeIndex];
 
+    const dist = calculateDistance(leftEye.x, rightEye.x, leftEye.y, rightEye.y);
+
     // 양눈 사이 점 위치계산
     const eyeCenterX = (leftEye.x + rightEye.x) / 2;
     const eyeCenterY = (leftEye.y + rightEye.y) / 2;
@@ -107,6 +109,17 @@ function calculateEyePositionAndFaceAngle(landmarksData) {
     return {
         x: eyeCenterX,
         y: eyeCenterY,
-        d: angle
+        d: angle,
+        dist: dist,
     };
 }
+
+function calculateDistance(x1, y1, x2, y2) {
+    var deltaX = x2 - x1;
+    var deltaY = y2 - y1;
+  
+    var distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+  
+    return distance;
+  }
+  
