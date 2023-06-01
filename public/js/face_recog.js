@@ -10,6 +10,8 @@ Promise.all([
     faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL),
 ]).then(OnReadyFaceAPI);
 
+const virtualCanvas = document.createElement('canvas'); // 캔버스 엘리먼트를 생성합니다.
+
 /* 이쪽이 안경 이미지 불러오는 코드입니다 */
 var canvas = document.getElementById('canvas');
 var glassesImage = new Image();
@@ -24,30 +26,34 @@ function OnReadyFaceAPI() {
         video: true
     };
 
+    var glassesInput = document.getElementById('glassesInput');
+    glassesInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = (readerEvent) => {
+            glassesImage.src = readerEvent.target.result;
+
+            glassesImage.onload = () => {
+                // 업로드된 이미지를 사용하여 원하는 작업 수행
+                console.log('이미지가 업로드되었습니다.');
+            };
+        };
+
+        reader.readAsDataURL(file);
+    });
+
     var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d');
     var video = document.getElementById('video');
     const captureButton = document.getElementById("webcamBtn");
 
     captureButton.addEventListener("click", function () {
+    
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0, canvas.width, canvas.height); // 캡처한 이미지 그리기
-
-        // 이미지를 네모 박스에 표시하기
-        var newCanvas = document.createElement('canvas');
-        newCanvas.width = canvas.width;
-        newCanvas.height = canvas.height;
-        newCanvas.style.width = "100%";
-        newCanvas.style.height = "100%";
-        var ctx = newCanvas.getContext('2d');
-        ctx.drawImage(canvas, 0, 0);
-
-        var imageContainer = document.getElementById("capturedImageContainer");
-        imageContainer.innerHTML = ""; // 이미지를 표시하기 전에 기존 내용을 지움
-        imageContainer.appendChild(newCanvas);
-
-        AnalyzeFace(context, canvas, video, newCanvas, ctx);
+        AnalyzeFace(context, canvas, video);
     });
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -59,43 +65,46 @@ function OnReadyFaceAPI() {
     }
 }
 
-function AnalyzeFace(context, canvas, video, ouputCanvas, ouputContext) {
-    setInterval(async () => {
-        const options = getFaceDetectorOptions()
-        const detections = await faceapi.detectAllFaces(canvas, options).withFaceLandmarks();
+async function AnalyzeFace(context, canvas, video) {
 
-        clearCanvas(canvas);
-        clearCanvas(ouputCanvas);
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        ouputContext.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const options = getFaceDetectorOptions()
+    const detections = await faceapi.detectAllFaces(canvas, options).withFaceLandmarks();
 
-        detections.forEach((face) => {
-            const box = face.detection.box;
-            const landmarks = face.landmarks;
+    detections.forEach((face) => {
+        const landmarks = face.landmarks;
 
-            const leftEye = landmarks.getLeftEye();
-            const rightEye = landmarks.getRightEye();
-            const nose = landmarks.getNose();
+        drawPoints(context, [landmarks.positions[16], landmarks.positions[0]]);
 
-            drawPoints(context, leftEye);
-            drawPoints(context, rightEye);
-            drawPoints(context, nose);
+        /*
+        const box = face.detection.box;
 
-            drawBox(context, box);
+        const leftEye = landmarks.getLeftEye();
+        const rightEye = landmarks.getRightEye();
+        const nose = landmarks.getNose();
 
-            const ouput = calculateEyePositionAndFaceAngle(landmarks.positions);
+        drawPoints(context, leftEye);
+        drawPoints(context, rightEye);
+        drawPoints(context, nose);
 
-            drawImage(ouputCanvas, glassesImage, ouput.x, ouput.y, ouput.d, ouput.dist);
-        });
-    }, 300);
+        drawBox(context, box);
+        
+        */
+
+        const ouput = calculateEyePositionAndFaceAngle(landmarks.positions);
+
+        drawImage(context, glassesImage, ouput.x, ouput.y, ouput.d, ouput.dist);
+    });
 }
 
 function calculateEyePositionAndFaceAngle(landmarksData) {
     const leftEyeIndex = 36; // 왼쪽 눈
     const rightEyeIndex = 45; // 오른쪽 눈
 
-    const leftEye = landmarksData[leftEyeIndex];
-    const rightEye = landmarksData[rightEyeIndex];
+    const leftIndex = 16; // 왼쪽 눈
+    const rightIndex = 0; // 오른쪽 눈
+
+    const leftEye = landmarksData[leftIndex];
+    const rightEye = landmarksData[rightIndex];
 
     const dist = calculateDistance(leftEye.x, rightEye.x, leftEye.y, rightEye.y);
 
@@ -117,9 +126,8 @@ function calculateEyePositionAndFaceAngle(landmarksData) {
 function calculateDistance(x1, y1, x2, y2) {
     var deltaX = x2 - x1;
     var deltaY = y2 - y1;
-  
+
     var distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
-  
+
     return distance;
-  }
-  
+}
