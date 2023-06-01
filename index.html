@@ -71,54 +71,33 @@
                 glassesImage.src = URL.createObjectURL(event.target.files[0]);
             }
         </script>
-        <section class="page-section" id="about" style="position: relative; background: white; height: 600px;">
-            <div class="container px-4 px-lg-5" style="margin-left: 5px;">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-lg-8 text-center">
-                        <!-- 이곳에 내용 추가 -->
-                    </div>
-                    <div class="col-lg-4" style="position: relative;">
-                        <!-- 안경을 착용한 모습을 보여주는 부분 -->
-                        <div class="text-center"
-                            style="background-color: black; height: 400px; width: 400px; position: absolute; left: 50%; transform: translateX(-50%); top: 50%;">
-                            <!-- 안경을 착용한 모습 안내 텍스트 -->
-                            <p
-                                style="color: black; position: absolute; top: -50px; left: 50%; transform: translate(-50%, -50%);">
-                                안경을 착용한 모습입니다!</p>
-                            <!-- 캡처한 이미지를 표시할 컨테이너 -->
-                            <div id="capturedImageContainer" style="width: 100%; height: 100%;"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4" style="position: relative;">
-                        <!-- AI가 추천하는 안경을 보여주는 부분 -->
-                        <div class="text-center"
-                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-                            <!-- 추천 안경 안내 텍스트 -->
-                            <p style="color: black;">이런 안경을 추천해드려요!</p>
+        
+        <section class="page-section" id="about" style="position: relative; background: white;">
+            <!-- AI가 추천하는 안경을 보여주는 부분 -->
+            <div class="text-center"
+            style="position: absolute;top: 10%;left: 50%;transform: translate(-50%, -50%);width: 100%;">
+            <!-- 추천 안경 안내 텍스트 -->
+            
+            <!-- 안경 선택 기능 -->
+            <div class="text-center"
+                style="position: absolute;left: 50%;transform: translate(-50%, -50%);width: 100%;">
+                <p style="color: black;">이런 안경을 추천해드려요!</p>
+                <input type="file" id="glassesInput" accept="image/*" style="top: -5px; right: 0%; width: 15%; position: absolute;" onchange="loadGlassesImage(event)">
+            </div>
 
-                            <!-- 추천 안경 이미지 -->
-                            <div class="text-center">
-                                <div id="glassesContainer"
-                                    style="width: 100%; overflow-x: scroll; white-space: nowrap; margin-left: -100px;">
-                                    <img class="glassesOption" src="glasses1.jpg"
-                                        style="width: 200px; height: 200px; margin-right: 10px;">
-                                    <img class="glassesOption" src="glasses2.jpg"
-                                        style="width: 200px; height: 200px; margin-right: 10px;">
-                                    <img class="glassesOption" src="glasses3.jpg"
-                                        style="width: 200px; height: 200px; margin-right: 10px;">
-                                </div>
-                            </div>
-                            <!-- 안경 선택 기능 -->
-                            <div class="text-center"
-                                style="position: absolute; top: calc(100% + 10px); left: 50%; transform: translate(-50%, -50%);">
-                                <label for="glassesInput" style="margin-bottom: 10px;"> 👍</label>
-                                <input type="file" id="glassesInput" accept="image/*"
-                                    onchange="loadGlassesImage(event)">
-                            </div>
-                        </div>
-                    </div>
+            <!-- 추천 안경 이미지 -->
+            <div class="text-center" style="margin-top: 20px;">
+                <div id="glassesContainer"
+                    style="width: 100%; overflow-x: scroll; white-space: nowrap;">
+                    <img class="glassesOption" src="glasses1.jpg"
+                        style="width: 200px; height: 200px; margin-right: 10px;">
+                    <img class="glassesOption" src="glasses2.jpg"
+                        style="width: 200px; height: 200px; margin-right: 10px;">
+                    <img class="glassesOption" src="glasses3.jpg"
+                        style="width: 200px; height: 200px; margin-right: 10px;">
                 </div>
             </div>
+        </div>
         </section>
 
         <script>

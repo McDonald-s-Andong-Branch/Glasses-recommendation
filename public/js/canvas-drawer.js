@@ -18,8 +18,8 @@ function drawBox(ctx, rect) {
 
 function drawImage(ctx, image, centerX, centerY, angle, dist) {
 
-    var imageWidth = dist * 1.3;
-    var imageHeight = image.height * dist / image.width;
+    var imageWidth = dist;
+    var imageHeight = image.height * dist / image.width / 1.3;
 
     ctx.save();
     ctx.translate(centerX, centerY);
