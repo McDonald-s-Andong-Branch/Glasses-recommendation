@@ -2,9 +2,8 @@
 ### 퍼스널 안경 시뮬레이터, FRAMEFIT
 
 <p align="center">
-  ![1685622529019](https://github.com/McDonald-s-Andong-Branch/Glasses-recommendation/assets/79901950/48a87a1c-6b91-4bc1-aa84-47a5727e552a)
-  ![1685622500200](https://github.com/McDonald-s-Andong-Branch/Glasses-recommendation/assets/79901950/62b5ada4-4b18-491f-b078-082f76441f3b)
-  <br>
+![1685622529019](https://github.com/McDonald-s-Andong-Branch/Glasses-recommendation/assets/79901950/32c65f62-813b-4897-a029-03203565e336) <br>
+![1685622500200](https://github.com/McDonald-s-Andong-Branch/Glasses-recommendation/assets/79901950/0aed6422-cbb3-459f-a8df-66e69b296ad9)
 </p>
 
 ## 프로젝트 소개
