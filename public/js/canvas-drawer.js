@@ -18,13 +18,12 @@ function drawBox(ctx, rect) {
 
 function drawImage(ctx, image, centerX, centerY, angle, dist) {
 
-    console.log(dist)
     var imageWidth = dist * 1.3;
-    var imageHeight = image.height * imageWidth / image.width * 2;
+    var imageHeight = image.height * dist / image.width;
 
     ctx.save();
     ctx.translate(centerX, centerY);
-    ctx.rotate(angle);
+    ctx.rotate(angle + 3.14);
     ctx.drawImage(image, -imageWidth / 2, -imageHeight / 2, imageWidth, imageHeight);
     ctx.restore();
 }
